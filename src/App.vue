@@ -1,18 +1,46 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Vue 3.0 Composition API</h1>
+    <button @click="increment">Click</button>
+    <p>count: {{ count }}</p>
+    <p>doubleCount: {{ doubleCount }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, computed } from "@vue/composition-api";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  setup() {
+    const { count, increment, doubleCount } = useIncrementNumber();
+
+    return {
+      count,
+      increment,
+      doubleCount
+    }
+  },
+};
+
+const useIncrementNumber = () => {
+  // data での定義
+  let count = ref(0);
+
+  // methods での定義
+  const increment = () => {
+    count.value += 1;
+  };
+
+  // computed での定義
+  const doubleCount = computed(() => {
+    return count.value * 2;
+  });
+
+  return {
+    count,
+    increment,
+    doubleCount,
+  };
 }
 </script>
 
@@ -24,5 +52,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  border: 3px solid #2c3e50;
 }
 </style>
